@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"fmt"
 )
 
@@ -32,4 +33,16 @@ func InitModel(){
 	//自动迁移  在gorm中建表默认是负数形式
 	db.AutoMigrate(new(Stu))
 
+}
+
+func InsertData(){
+	var stu Stu
+	stu.Name="bj5q"
+	stu.PassWord="123456"
+	if err :=GlobalDb.Create(&stu);err !=nil  {
+		fmt.Println("创建数据失败!")
+		return
+	}
+
+	fmt.Println(stu)
 }

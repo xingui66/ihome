@@ -24,6 +24,6 @@ func main() {
 	}
 
 	model.InitModel()
-    //model.InsertData();
+    model.InsertData();
 
 }
