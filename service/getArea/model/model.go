@@ -5,7 +5,6 @@ import (
 	"time"
 	"ihomegit/ihome/conf"
 	"fmt"
-
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/gomodule/redigo/redis"
 )
@@ -117,7 +116,7 @@ func InitRedis(){
 		MaxActive:50,
 		IdleTimeout:60*5,
 		Dial: func() (redis.Conn, error) {
-			return redis.Dial("tcp","127.0.0.1:6379")
+			return redis.Dial("tcp","192.168.11.47:6379")
 		},
 	}
 

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package go.micro.srv.getSms;
+
+service GetSms {
+	rpc MicroGetSms(Request) returns (Response) {}
+}
+
+message Message {
+}
+
+message Request {
+	string mobile=1;
+	string text =2;
+	string uuid =3;
+}
+
+message Response {
+	string errmsg =1;
+	string errno = 2;
+}
+
