@@ -1,0 +1,64 @@
+rest 接口名词化，充分利用http协议，用不同的method方式，代表用户的增删改查操作
+restful 用ful修饰rest,表示rest化的 接口服务
+
+
+
+开启redis,着重注意ip
+redis-server   /etc/redis/redis.conf
+
+ps aux|grep redis
+
+创建gomicro微服务项目的步骤
+
+//开启consul
+consul agent -server -bootstrap-expect 1 -data-dir /tmp/consul -node=n1 -bind=192.168.11.46 -ui -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0
+
+
+micro  new --type srv  microDemo/testSrv
+micro  new --type web  microDemo/testWeb
+
+root@ubuntu:~/workspace/go/src/microDemo/testSrv   这个路径下
+服务端项目下编译（****进入到Makefile同级目录下****，使用右边命令：） make proto
+go run main.go
+
+将testSrv目录下的proto,拷贝到web项目同等目录下
+并，手动导入proto 包      testWeb "microDemo/testWeb/proto/testSrv"
+
+
+root@ubuntu:~/workspace/go/src/microDemo/testWeb   这个路径下 testWeb
+添加handler
+
+go run main.go
+
+
+
+
+consul agent
+
+
+
+
+
+
+
+
+
+
+====================================
+redis   (ip问题)
+conn.do 序列的字节切片,没有保存到redis里,有错误  err: write tcp 192.168.11.45:57138->192.168.11.45:6379: write: broken pipe
+conn.do 序列的字节切片,没有保存到redis里,有错误  err: write tcp 192.168.11.45:57342->192.168.11.45:6379: write: connection reset by peer
+conn.do 序列的字节切片,没有保存到redis里,有错误  err: write tcp 192.168.11.45:57410->192.168.11.45:6379: write: broken pipe
+conn.do 序列的字节切片,没有保存到redis里,有错误  err: write tcp 192.168.11.45:57478->192.168.11.45:6379: write: broken pipe
+
+
+====================================
+验证码
+github.com/afocus/captcha/examples/after/main.go
+====================================
+前端和后台交互数据
+form数据 $ FormData
+json数据 $ ctx.Bind(&req)
+
+====================================
+
