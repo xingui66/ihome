@@ -34,7 +34,7 @@ var _ server.Option
 // Client API for GetSms service
 
 type GetSmsService interface {
-	MicroGetSms(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	    MicroGetSms(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type getSmsService struct {

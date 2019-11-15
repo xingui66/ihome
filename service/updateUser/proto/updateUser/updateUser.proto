@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package go.micro.srv.updateUser;
+
+service UpdateUser {
+	rpc MicroGetUserInfo(Request) returns (Response) {}
+	rpc MicroUpdateUser(UpdateReq) returns (UpdateResp) {}
+
+}
+
+message Message {
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string errno = 1;
+	string errmsg = 2;
+	UserInfo data = 3;
+}
+message UserInfo {
+	int32 user_id = 1;
+	string name =2;
+	string mobile =3;
+	string id_card =5;
+	string avatar_url = 6;
+}
+
+message UpdateReq{
+	string newName=1;
+	string oldName=2;
+
+}
+message UpdateResp{
+	string errno=1;
+	string errmsg =2;
+	NameData data =3;
+
+}
+message NameData{
+	string name =1;
+}

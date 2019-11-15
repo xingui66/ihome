@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package go.micro.srv.RegAndLog;
+
+service RegAndLog {
+	rpc MiroRegister(Request) returns (Response) {}
+	rpc MiroLogin(Request) returns (Response) {}
+}
+
+message Message {
+}
+
+message Request {
+	string mobile = 1;
+	string password = 2;
+	string smscode=3;
+}
+
+message Response {
+	string errno =1;
+	string errmsg=2;
+	string name=3;
+}

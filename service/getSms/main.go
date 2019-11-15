@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	model.InitRedis()
 	//服务发现用consul
 	consulReg := consul.NewRegistry()
 
@@ -24,7 +25,7 @@ func main() {
 
 	// Initialise service
 	service.Init()
-	model.InitRedis()
+
 
 	// Register Handler
 	getSms.RegisterGetSmsHandler(service.Server(), new(handler.GetSms))

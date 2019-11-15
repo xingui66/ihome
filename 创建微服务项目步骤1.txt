@@ -4,7 +4,7 @@ restful 用ful修饰rest,表示rest化的 接口服务
 
 
 开启redis,着重注意ip
-redis-server   /etc/redis/redis.conf
+sudo redis-server   /etc/redis/redis.conf
 
 ps aux|grep redis
 

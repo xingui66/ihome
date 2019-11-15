@@ -1,18 +1,18 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
-	"ihomegit/ihome/conf"
-	"fmt"
+	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"fmt"
 	"github.com/gomodule/redigo/redis"
+	"ihomegit/ihome/service/RegAndLog/conf"
 )
 
 /* 用户 table_name = user */
 type User struct {
 	ID            int                                  //用户编号
-	Name          string        `gorm:"size:32;unique"`           //用户名
+	Name          string        `gorm:"size:32;unique;not null"`           //用户名
 	Password_hash string        `gorm:"size:128" `      //用户密码加密的  hash
 	Mobile        string        `gorm:"size:11;unique" ` //手机号
 	Real_name     string        `gorm:"size:32" `      //真实姓名  实名认证
@@ -82,45 +82,46 @@ type OrderHouse struct {
 	Credit      bool													//表示个人征信情况 true表示良好
 }
 
-
-
-/////////初始化mysql,初始化redis
-
 var GlobalDB *gorm.DB
-var GlobalRedis redis.Pool
 
+
+
+//一个函数一个功能    50行
 func InitDb()error{
-
+	//打开数据库
+	//拼接链接字符串
 	connString := conf.MysqlName+":"+conf.MysqlPwd+"@tcp("+conf.MysqlAddr+":"+conf.MysqlPort+")/"+conf.MysqlDB+"?parseTime=true"
-
-	db,err := gorm.Open("mysql",connString)
+	db,err  := gorm.Open("mysql",connString)
 	if err != nil {
-		fmt.Println("gorm.Open err :",err)
+		fmt.Println("链接数据库失败",err)
 		return err
 	}
 
+	//连接池设置
+	//设置初始化数据库链接个数
 	db.DB().SetMaxIdleConns(50)
 	db.DB().SetMaxOpenConns(70)
 	db.DB().SetConnMaxLifetime(60 * 5)
 
-	//默认表名是复数
+	//默认情况下表名是复数
 	db.SingularTable(true)
 
 	GlobalDB = db
+
+	//表的创建
 	return db.AutoMigrate(new(User),new(House),new(Area),new(Facility),new(HouseImage),new(OrderHouse)).Error
 }
 
+//初始化redis链接
 func InitRedis(){
-	GlobalRedis = redis.Pool{
+	RedisPool = redis.Pool{
 		MaxIdle:20,
 		MaxActive:50,
-		IdleTimeout:60*5,
+		IdleTimeout:60 * 5,
 		Dial: func() (redis.Conn, error) {
 			return redis.Dial("tcp","127.0.0.1:6379")
 		},
 	}
-
 }
-
 
 

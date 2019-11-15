@@ -7,15 +7,19 @@ import (
 
 	getImg "ihomegit/ihome/service/getImg/proto/getImg"
 	"ihomegit/ihome/service/getImg/model"
+	"github.com/micro/go-micro/registry/consul"
 )
 
 func main() {
+	//服务发现用consul
+	consulReg := consul.NewRegistry()
 	model.InitRedis()
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.getImg"),
 		micro.Version("latest"),
 		micro.Address(":8087"),
+		micro.Registry(consulReg),
 	)
 
 	// Initialise service
